@@ -1,0 +1,16 @@
+# Ignora TUTTE le cartelle target ovunque si trovino (es. dentro guessing_game, hello_cargo, ecc.)
+**/target/
+
+# Ignora eseguibili compilati manualmente con rustc (come il tuo file hello_world)
+hello_world
+*.exe
+*.pdb
+
+# Ignora i file di backup di rustfmt
+**/*.rs.bk
+
+# File specifici di editor e sistema
+.vscode/
+.idea/
+*.swp
+.DS_Store
