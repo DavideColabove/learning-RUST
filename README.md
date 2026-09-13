@@ -1,34 +1,28 @@
 # 🦀 Rust 8-Week Learning Journey
 
-Welcome to my **Rust Learning Repository**! This repository tracks my step-by-step progress through an intensive **8-week learning roadmap** based on the official text, ***The Rust Programming Language*** (also known as *The Rust Book*).
+Welcome to my **Rust Learning Repository** (`learning-RUST`)! This repository tracks my step-by-step progress through an intensive **8-week learning roadmap** to master systems programming, primarily following ***Programming Rust 2nd Edition***.
 
-The goal of this project is to build a solid foundation in Rust systems programming—from basic syntax and memory safety (Ownership & Borrowing) to advanced topics like concurrency, traits, and building a multithreaded web server.
+The goal of this project is to build a solid foundation in Rust—from basic syntax and memory safety (Ownership & Borrowing) to advanced topics like concurrency, traits, and building complex applications.
 
 ---
 
 ## 📁 Repository Structure
 
-This repository is organized as a **Cargo Workspace**, allowing all weekly exercises and chapters to be built and tested together:
+This repository is organized by weeks and study topics. Instead of a single Cargo Workspace, it contains independent Cargo projects, standalone scripts, and markdown notes:
 
 ```text
-rust-learning-journey/
-├── Cargo.toml                    # Workspace manifest
-├── README.md                     # Project overview and roadmap
-├── ch01_to_03_basics/            # Variables, Types, Functions, Control Flow & I/O
-│   ├── Cargo.toml
-│   ├── src/
-│   │   ├── main.rs               # Exercises and implementations
-│   │   └── lib.rs
-│   └── QUIZ.md                   # Weekly review quiz with solutions
-├── ch04_ownership/               # Ownership, Borrowing, References and Slices
-├── ch05_06_structs_enums/        # Structs, Enums, and Pattern Matching
-├── ch07_08_modules_collections/  # Packages, Modules, and Common Collections
-├── ch09_10_errors_generics/      # Error Handling, Generics, Traits, and Lifetimes
-├── ch11_12_tests_minigrep/       # Automated Tests and "Minigrep" CLI Project
-├── ch13_14_functional_cargo/     # Closures, Iterators, and Cargo Workspaces
-├── ch15_16_pointers_concurrency/ # Smart Pointers and Fearless Concurrency
-├── ch17_to_19_advanced/          # OOP Features, Advanced Patterns, and Unsafe Rust
-└── ch20_web_server/              # Final Project: Multithreaded Web Server
+learning-RUST/
+├── misc/                          # Study plans, quizzes, and general exercises
+│   ├── rust_exercises.md
+│   ├── rust_quizzes.md
+│   └── rust_study_plan.md
+└── week01_fundations/             # Week 1: Foundations and basic concepts
+    ├── guessing_game/             # Independent Cargo project
+    ├── hello_cargo/               # Independent Cargo project
+    ├── hello_world.rs             # Standalone rustc executable file
+    ├── basics.md                  # Personal study notes
+    ├── Chapter1.md
+    └── Chapter2.md
 ```
 
 ---
