@@ -56,12 +56,23 @@ Here I track my progress through all the chapters of the book:
 
 ## 🛠️ How to Run Exercises & Tests
 
-To execute all tests across the entire workspace, run:
+Since these are standalone projects rather than a unified Cargo Workspace, you need to navigate into the specific project directory before running Cargo commands.
+
+To run a specific Cargo project (e.g., guessing_game):
 ```bash
-cargo test --workspace
+cd week01_fundations/guessing_game
+cargo run
 ```
 
-To run a specific chapter's exercise (e.g., the basics chapter):
+To run tests for a specific project:
 ```bash
-cargo run -p ch01_to_03_basics
+cd week01_fundations/guessing_game
+cargo test
+```
+
+To compile and execute a standalone .rs file (e.g., hello_world.rs):
+```bash
+cd week01_fundations
+rustc hello_world.rs
+./hello_world   # On Windows: .\hello_world.exe
 ```
