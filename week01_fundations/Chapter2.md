@@ -1,4 +1,5 @@
 # Chapter 2: Programming a guess game
+
 Here’s how it works: the program will generate a random integer
 between 1 and 100.\\ It will then prompt the player to enter a guess. After a
 guess is entered, the program will indicate whether the guess is too low or
