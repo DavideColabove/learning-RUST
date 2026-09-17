@@ -176,3 +176,94 @@ panic, which is the term Rust uses when a program exits with an error.
 This is the first example of Rust’s safety principles in action. In many
 low-level languages, this kind of check is not done, and when you provide an
 incorrect index, invalid memory can be accessed.
+
+## Functions
+
+As for many others programming languages obviously the main() function is the program entry point. \
+'fn' allows you to declare a new function: 
+
+```rust
+fn main() {
+    println!("Hello, world!");
+    another_function();
+}
+
+fn another_function() {
+    println!("Another function.");
+}
+```
+
+Rust uses snake case conventional style for functions and variables names: lowercase and underscores sepa­rate words. \
+
+Note that we defined 'another​_function' after the main function in the source code; we could have defined it before as well. \
+Rust doesn’t care where you define your functions, only that they’re defined somewhere.
+
+### Functions parameters
+
+As for many others programming languages Rust also has parameters and arguments for its functions signatures; \
+The following rewritten version of 'another_function' shows what param­eters look like in Rust:
+
+```rust
+fn main() {
+    another_function(5);
+}
+
+fn another_function(x: i32) {
+    println!("The value of x is: {}", x);
+}
+```
+
+The declaration of another_function has one parameter named x. \
+The type of x is specified as i32. When 5 is passed to another_function, the println! macro puts 5 where the pair of curly brackets were in the format string.
+
+In functions signatures you MUST declare the type of each parameter which means that the compiler almost never needs you to use them elsewhere in the code to figure out what you mean.
+
+### Statements and Expressions in Function Bodies
+
+Statements are instruc­tions that perform some action and do not return a value. 
+
+Expressions evaluate to a resulting value.
+
+For example: \
+Creating a variable and assigning a value to it with the 'let' keyword is a statement.
+```rust
+fn main() {
+    let y = 6;
+}
+```
+
+Statements do not return values. Therefore, you can’t assign a let state­ment to another variable, as the following code tries to do: you’ll get an error;
+```rust
+fn main() {
+    let x = (let y = 6);
+}
+```
+
+This is different from C where assignments returns the value of the assignment: in that language you can write 'x = y = 6' and both 'x' and 'y' contain the value 6.
+
+Expressions evaluate to something and make up most of the rest of the code that you’ll write in Rust. \
+Consider a simple math operation, such as '5 + 6', which is an expression that evaluates to the value '11'.
+
+For example, calling a function is an expression, aswell as calling a macro or creating new scopes etc...
+
+```rust
+fn main() {
+    let x = 5;
+
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {}", y);
+}
+```
+
+The expression after 'y' is a block that, in this case, evaluates to 4. \
+That value gets bound to 'y' as part of the let statement before 'y'. 
+
+Note the line without a semicolon at the end, which is unlike most of the lines you’ve seen so  far. \
+Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not
+return a value. \
+
+### Functions with Return Values
