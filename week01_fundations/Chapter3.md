@@ -264,6 +264,136 @@ That value gets bound to 'y' as part of the let statement before 'y'.
 
 Note the line without a semicolon at the end, which is unlike most of the lines you’ve seen so  far. \
 Expressions do not include ending semicolons. If you add a semicolon to the end of an expression, you turn it into a statement, which will then not
-return a value. \
+return a value. 
 
 ### Functions with Return Values
+
+Functions can return values to the code that calls them, in Rust we don't name return values but we declare their type after an arrow '->'. \
+The return value is the value of the final expression in the block of the body of a function. \
+You can also return early by using the 'return' keyword and specifying a value, here is an example:
+```rust
+fn five() -> i32 {
+    5
+}
+
+fn main() {
+    let x = five();
+    println!("The value of x is: {}", x);
+}
+```
+
+The 5 in five is the function’s return value, which is why the return type is 'i32'. \
+We’re using the return value of a function to initialize a variable, because the function five returns a 5, that line is the
+same as the following:
+```rust
+let x = 5;
+```
+
+The five function has no parameters and defines the type of the return value, but the body of the function is a lonely 5 with no semi­
+colon because it’s an expression whose value we want to return.
+
+Here is another example:
+```rust
+fn main() {
+    let x = plus_one(5);
+    println!("The value of x is: {}", x);
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1
+}
+```
+
+This works completely fine and print 'The value of x is: 6', but by adding a semicolon at the end of 'x+1':
+
+```rust
+fn main() {
+    let x = plus_one(5);
+    println!("The value of x is: {}", x);
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1;
+}
+```
+We'll get an error: "note: 'expected type i32 found type ()'". \
+The definition of the function plus_one says that it will return an i32, but statements don’t evaluate to a value, which is expressed by (), the
+empty tuple. \
+Therefore, nothing is returned, which contradicts the function definition and results in an error.
+
+## Control Flow
+
+Introducing 'if' and loops expressions
+
+### if Expressions
+
+Unlike languages such as JavaScript, Rust will not automatically try to convert non-Boolean types to a Boolean. You must be explicit and always provide if with a Boolean as its condition.
+
+#### Handling multiple conditions with else if
+
+```rust
+fn main() {
+    let number = 6;
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+    }
+}
+```
+
+When this program executes, it checks each if expression in turn and executes the first body for which the condition holds true. \
+Note that even though 6 is divisible by 2, we don’t see the output number is divisible by 2,nor do we see the number is not divisible by 4, 3, or 2 text from the else block. \ 
+That’s because Rust only executes the block for the first true condi­tion, and once it finds one, it doesn’t even check the rest.
+
+#### Using if in a let statement
+
+Because 'if' is an exxpression, we can use it on the right side of a let statement:
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition {
+        5
+    } else {
+        6
+    };
+    println!("The value of number is: {}", number);
+}
+```
+
+We just have to make sure we provide the same type of values for each 'arm' otherwise we'll get an error like: "note: expected type {integer}
+found type &str"
+
+
+## Repetition with loops
+
+### Conditional loops: while
+
+An example: 
+```rust
+fn main() {
+    let mut number = 3;
+    while number != 0 {
+        println!("{}!", number);
+        number = number - 1;
+    }
+    println!("LIFTOFF!!!");
+}
+```
+
+### Looping through a collection: for
+
+You can use a for loop and execute some code for each item in a collection. \
+A for loop looks like the code that follows:
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+    for element in a.iter() {
+        println!("the value is: {}", element);
+    }
+}
+```
