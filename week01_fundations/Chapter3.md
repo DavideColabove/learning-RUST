@@ -397,3 +397,15 @@ fn main() {
     }
 }
 ```
+
+Here’s what the countdown would look like using a for loop and
+another method we’ve not yet talked about, rev, to reverse the range:
+
+```rust
+fn main() {
+    for number in (1..4).rev() {
+        println!("{}!", number);
+    }
+    println!("LIFTOFF!!!");
+}
+```
