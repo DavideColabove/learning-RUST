@@ -153,4 +153,35 @@ Methods can take ownership of 'self', borrow 'self' immutably as we’ve done he
 We don’t want to take ownership, and we just want to read the data in the struct, not write to it (therefore we used '&self'). \
 If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use '&mut self' as the first parameter.
 
-![stack_vs_heap](../img/stack_vs_heap.pn)
+### Rust interpretation of '->' operator
+
+Rust doesn’t have an equivalent to the '->' operator; instead, Rust has a fea-
+ture called automatic referencing and dereferencing. \
+Calling methods is one of the few places in Rust that has this behavior.
+Here’s how it works: when you call a method with 'object.something()',
+Rust automatically adds in '&', '&mut', or '*' so object matches the signature of the method. 
+
+In other words, the following are the same:
+```rust
+p1.distance(&p2);
+(&p1).distance(&p2);
+```
+
+### Associated Functions ()
+
+Another useful feature of impl blocks is that we’re allowed to define
+functions within impl blocks that don’t take self as a parameter. \
+These are called associated functions because they’re associated with the struct.
+
+Associated functions are often used for constructors that will return
+a new instance of the struct. \
+Here is an example:
+```rust
+impl Rectangle {
+    fn square(size: u32) -> Rectangle {
+        Rectangle { width: size, height: size }
+    }   
+}
+```
+
+To call this associated function, we use the '::' syntax with the struct name; 'let sq = Rectangle::square(3);' is an example.
