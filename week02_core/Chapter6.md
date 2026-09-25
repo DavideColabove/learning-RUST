@@ -233,31 +233,164 @@ value of the expression in the matching arm is the value that gets returned
 for the entire match expression.  \
 We can use curly brackets to allows us to run multiple lines of code:
 ```rust
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter,
-}
-
 fn value_in_cents(coin: Coin) -> u32 {
     match coin {
-        Coin::Penny => 1,
-        Coin::Nickel => ,5
+        Coin::Penny => {
+            println!("Lucky penny!");
+            1
+        },
+        Coin::Nickel => 5,
         Coin::Dime => 10,
         Coin::Quarter => 25,
     }
 }
-``````rust
-fn value_in_cents(coin: Coin) -> u32 {
-    match coin {
-    Coin::Penny => {
-        println!("Lucky penny!");
-        1
-    },
-    Coin::Nickel => 5,
-    Coin::Dime => 10,
-    Coin::Quarter => 25,
+```
+
+### Patterns that bind to values
+
+Another useful feature of match arms is that they can bind to the parts of
+the values that match the pattern. This is how we can extract values out of
+enum variants.
+
+For example, a 'Coin' enum in which the 'Quarter' variant also holds a 'UsState' value: 
+```rust
+enum UsState {
+    Alabama,
+    Alaska,
+    // --snip--
 }
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
 }
 ```
+
+In the match expression for this code, we add a variable called state
+to the pattern that matches values of the variant 'Coin::Quarter'. When a
+'Coin::Quarter' matches, the state variable will bind to the value of that quarter’s state, continuing with the previous assumptions:
+```rust
+fn value_in_cents(coin: Coin) -> u32 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state);
+            25
+        },
+    }
+}
+```
+If we were to call 'value_in_cents(Coin::Quarter(UsState::Alaska))', coin would be 'Coin::Quarter(UsState::Alaska)'. By doing so we also get the inner value of the enum.
+
+### Matching with `Option<T>`
+
+Let’s say we want to write a function that takes an `Option<i32>` and, if
+there’s a value inside, adds 1 to that value. \
+If there isn’t a value inside, the function should return the None value and not attempt to perform any operations.
+```rust
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i+1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+```
+
+### Matches are exhaustive
+
+If we didn’t handle the 'None' case, this code will cause a bug but luckily, it’s
+a bug Rust knows how to catch:
+```rust
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        Some(i) => Some(i + 1),
+    }
+}
+```
+Matches in Rust are exhaustive: we must exhaust every last possibility in order for the code to be valid. \
+Especially in the case of `Option<T>`, when Rust prevents us from forgetting to explicitly handle the 'None' case, it protects us from assuming that we have a value when we might
+have null.
+ 
+
+### The _ placeholder
+
+Rust also has a pattern we can use when we don’t want to list all possible
+values.
+
+If we only care about the values 1, 3, 5, and 7, we don’t want to have to list out 0, 2, 4,
+6, 8, 9 all the way up to 255.\
+The _ pattern will match any value.
+
+By putting it after our other arms, the _ will match all the possible cases that aren’t specified before it. \
+The () is just the unit value, so nothing will happen in the _ case.
+
+```rust
+let some_u8_value = 0u8;
+match some_u8_value {
+    1 => println!("one"),
+    3 => println!("three"),
+    5 => println!("five"),
+    7 => println!("seven"),
+    _ => (),
+}
+```
+
+### Coincise control flow with `if let`
+
+If we want to define just one case in our match expression that does something we would do:
+```rust
+let some_u8_value = Some(0u8);
+
+match some_u8_value {
+    Some(3) => println!("three"),
+    _ => (),
+}
+```
+
+But we can also express the same logic using `if let` in a more concise way:
+```rust
+let some_u8_value = Some(0u8);
+
+if let Some(3) = some_u8_value {
+    println!("three");
+}
+```
+
+The syntax `if let` takes a pattern and an expression separated by an
+equal sign. It works the same way as a 'match', where the expression is given
+to the 'match' and the pattern is its first arm. \
+Using `if let` means less typing, less indentation, and less boiler­plate
+code. However, you lose the exhaustive checking that match enforces.
+
+We can include an 'else' with an `if let`. The block of code that goes
+with the 'else' is the same as the block of code that would go with the _ case
+in the 'match' expression that is equivalent to the `if let` and 'else'.
+
+Using the 'Coin' example from above, if we wanted to count every non-Quarter while also announcing the states of the quarters, we have this two equivalent possibilites:
+```rust
+let mut count = 0;
+
+match coin {
+    Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+    _ => count += 1,
+}
+```
+or
+```rust
+let mut count = 0;
+
+if let Coin::Quarter(state) = coin {
+    println!("State quarter from {:?}!", state);
+} else{
+    count += 1;
+}
+```
+
