@@ -59,3 +59,45 @@ they’re in different namespaces.
 ![lib_hierarchy](../img/lib_hierarchy.png)
 
 ### Moving modules to other files
+
+We can use Rust’s module system along with multiple files to split up Rust projects so not everything lives in `src/lib.rs` or `src/main.rs`.
+
+For example we might want to to separate the 'client', 'network',
+and 'server' modules from `src/lib.rs` and place them into their own files.
+
+We’re still declaring the client module inside the `src/lib.rs`, but by replacing the block with a semicolon, we’re telling Rust to look in another location for the code.
+
+So we've now moved the content of the 'client' and 'network' modules content into their own files;
+
+We still have to extract the 'server' module into its own file because it was a submodule of 'network'.
+
+The error says we cannot declare a new module at this location and is
+pointing to the 'mod server;' line in `src/network.rs`.
+
+Instead of continuing to follow the same file-naming pattern we used
+previously, we can do what the note suggests:
+1. Make a new directory named 'network', the parent module’s name.
+2. Move the `src/network.rs` file into the new 'network' directory and rename it `src/network.rs/mod.rs`.
+3. Move the submodule file `src/server.rs` into the network directory.
+
+Therefore, in order to extract a file for the 'network::client' submodule of
+the 'network' module, we needed to create a directory for the 'network' module
+instead of a `src/network.rs` file. \
+The code that is in the network module then goes into the `src/network/mod.rs` file, and the submodule 'network::client' can have its own `src/network/client.rs` file. \
+Now the top-level `src/client.rs` is unambiguously the code that belongs to the client module.
+
+### Rules of Module filesystem
+
+- If a module named 'foo' has no submodules, you should put the declarations for foo in a file named `foo.rs`.
+- If a module named 'foo' does have submodules, you should put the declarations for foo in a file named `foo/mod.rs`.
+
+This rules apply recursively, so if a module named 'foo' has a submodule
+named 'bar' and 'bar' does not have submodules, you should have the following
+files in your `/src` 
+
+![foo_lib_hierarchy](../img/foo_lib_hierarchy.png)
+
+The modules should be declared in their parent module’s file using the
+mod keyword.
+
+## Controlling visibility with pub
