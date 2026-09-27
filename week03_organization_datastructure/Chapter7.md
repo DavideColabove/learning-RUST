@@ -101,3 +101,28 @@ The modules should be declared in their parent module’s file using the
 mod keyword.
 
 ## Controlling visibility with pub
+
+The '/communicator' project we've built does compile with 'cargo build' but we still get warnings saying that the 'client::connect()', 'network::connect()' and 'network::server::connect()' functions are not being used.
+
+In order to understand what's happeing we're going to create a new `/src/main.rs` file invoking the 'client::connect()' functions inside the main function.
+
+However, invoking cargo build will now give us an error
+after the warnings: `error[E0603]: module 'client' is private`.
+
+The default state of all code in Rust is private: no one else is allowed to use the code. \
+If you don’t use a private function within your program, because your program is the only code allowed to
+use that function, Rust will warn you that the function has gone unused.\
+After you specify that a function such as `client::connect()` is public, not
+only will your call to that function from your binary crate be allowed, but also the warning that the function is unused will go away.
+
+### Making a function public
+
+To tell Rust to make a function public, we add the 'pub' keyword to the
+start of the declaration.
+
+We can add this attribute both to modules and functions!
+
+Summarizing privacy rules:
+- If an item is public, it can be accessed through any of its parent modules.
+- If an item is private, it can be accessed only by its immediate parent
+module and any of the parent’s child modules.
