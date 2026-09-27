@@ -1,4 +1,4 @@
-mod outermost{
+pub mod outermost{
     pub fn middle_function(){
         middle_secret_function();
     }
@@ -16,7 +16,7 @@ mod outermost{
     }
 }
 
-fn try_me(){
+pub fn try_me(){
     outermost::middle_function();
     outermost::inside::inner_function();
 }
