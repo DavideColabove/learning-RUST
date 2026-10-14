@@ -1,6 +1,6 @@
 # 🦀 Rust 8-Week Learning Journey
 
-Welcome to my **Rust Learning Repository** (`learning-RUST`)! This repository tracks my step-by-step progress through an intensive **8-week learning roadmap** to master systems programming, primarily following ***Programming Rust 2nd Edition***.
+Welcome to my **Rust Learning Repository** (`learning-RUST`)! This repository tracks my step-by-step progress through an intensive **8-week learning roadmap** to master systems programming, primarily following ***The Rust Programming Language***.
 
 The goal of this project is to build a solid foundation in Rust—from basic syntax and memory safety (Ownership & Borrowing) to advanced topics like concurrency, traits, and building complex applications.
 
