@@ -38,7 +38,7 @@ Here I track my progress through all the chapters of the book:
 - [x] **Chapter 5:** Using Structs to Structure Related Data
 - [x] **Chapter 6:** Enums and Pattern Matching
 - [x] **Chapter 7:** Managing Growing Projects with Packages, Crates, and Modules
-- [ ] **Chapter 8:** Common Collections
+- [x] **Chapter 8:** Common Collections
 - [ ] **Chapter 9:** Error Handling
 - [ ] **Chapter 10:** Generic Types, Traits, and Lifetimes
 - [ ] **Chapter 11:** Writing Automated Tests
