@@ -487,7 +487,44 @@ scores.entry(String::from("Yellow")).or_insert(50);
 scores.entry(String::from("Blue")).or_insert(50);
 
 println!("{:?}", scores);
+
+// Prints: "Yellow": 50, "Blue": 10
 ```
+
+The `or_insert` method on `Entry` is defined to return a mutable reference
+to the value for the corresponding `Entry` key if that key exists, and if not,
+inserts the parameter as the new value for this key and returns a mutable
+reference to the new value.
 
 #### Updating a value based on the old value
 
+Another common use case for hash maps is to look up a key’s value and
+then update it based on the old value.
+
+The following snippet counts how many times each word appears in some text. \
+We use a hash map with the words as keys and increment the value to keep track of how many times we’ve seen that word. \
+If it’s the first time we’ve seen a word, we’ll first insert the value 0.
+
+```rust
+use std::collections::HashMap;
+
+let text = "hello world wonderful world";
+
+let mut map = HashMap::new();
+
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+println!("{:?}", map);
+
+// Prints: "world": 2, "hello": 1, "wonderful": 1
+```
+
+#### Hashing functions
+
+If you profile your code and find
+that the default hash function is too slow for your purposes, you can switch
+to another function by specifying a different hasher. 
+
+A hasher is a type that implements the `BuildHasher` trait.
